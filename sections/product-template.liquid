@@ -169,10 +169,6 @@
 
         <hr>
 
-        <div class="rte product-single__description" itemprop="description">
-          {{ product.description }}
-        </div>
-
         <div classs="product-single__chart">
         {% if product.title contains "Her" %}
         {% include "size-chart__female" %}
@@ -191,6 +187,17 @@
     </div>
   </div>
 </div>
+
+
+<div class="page-width">
+
+  <div class="rte product-single__description" itemprop="description">
+    {{ product.description }}
+  </div>
+
+</div>
+
+
 
 {% unless product == empty %}
   <script type="application/json" id="ProductJson-{{ section.id }}">

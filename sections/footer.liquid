@@ -1,5 +1,8 @@
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
+    <div class="footer-logo">
+      <img src="https://cdn.shopify.com/s/files/1/2499/1496/files/logo-footer.jpg?8398686699220779380">
+    </div>
     <div class="flex-footer">
       {% for block in section.blocks %}
         <div class="flex__item" {{ block.shopify_attributes }}>
@@ -167,7 +170,7 @@
     <div class="page-width">
       <div class="grid medium-up--grid--table">
         <div class="grid__item medium-up--one-half">
-          <small>&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. {{ powered_by_link }}</small>
+          <small>&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. </small>
         </div>
         <div class="grid__item medium-up--one-half medium-up--text-right">
           {% unless shop.enabled_payment_types == empty %}

@@ -1520,6 +1520,9 @@ label[for] {
 }
 
 .main-content {
+  // added by Dylan Hsiao
+  // this line should be handled by javascript to calulate the height on-the-fly (minus height of the header and footer)
+  min-height: calc(100% - 129px - 299px);
   display: block;
   margin-top: $gutter-site * 1.5;
   padding-bottom: $gutter-site * 2;
@@ -1559,10 +1562,55 @@ hr {
   border-style: solid;
   border-width: 1px 0 0;
 }
+.hr--small-gap{
+  margin: 10px 0;
+}
 
 .hr--dark {
   border-color: darken($color-body, 15%);
 }
+
+.hr--short{
+  width: 60px;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  margin: 20px auto
+}
+
+.hr--teal{
+  background: #31bdc2;
+}
+
+.temp--1 {
+  flex: 1 1 100% !important;
+  @include media-query(medium-up) {
+    flex: 2 1 66.66% !important;
+  }
+}
+
+.temp--2 {
+  flex: 1 1 100% !important;
+  @include media-query(medium-up) {
+    flex: 1 1 33.33% !important;
+  }
+}
+
+.flex-order-first-until-medium {
+  order: 1;
+  @include media-query(medium-up) {
+    order: 0;
+  }
+}
+
+.flex-order-second-until-medium {
+  order: 2;
+  @include media-query(medium-up) {
+
+    order: 0;
+  }
+}
+
 
 /*================ Empty pages (404, cart) ================*/
 .page-empty {
@@ -1780,6 +1828,18 @@ h6 {
 
 .h6 {
   @extend h6;
+}
+
+.centered {
+  text-align: center;
+}
+
+.heading {
+  font-family: $font-stack-accent;
+}
+
+.underline--teal{
+  border-bottom: 4px solid #31bdc2;
 }
 
 /*================ RTE headings ================*/
@@ -2760,8 +2820,9 @@ $slick-opacity-not-active: 0.25;
 }
 
 .site-header__upper {
-  padding-top: $gutter-site / 4;
-  padding-bottom: $gutter-site / 4;
+  padding: 22px 0 22px;
+  // padding-top: $gutter-site / 4;
+  // padding-bottom: $gutter-site / 4;
 
   @include media-query($medium-up) {
 /*     padding-top: $gutter-site;
@@ -2778,10 +2839,12 @@ $slick-opacity-not-active: 0.25;
   a {
     display: block;
     color: $color-header-links;
+    padding-left: 0px !important;
 
     @include media-query($medium-up) {
       display: block;
       float: left;
+      padding-left: 20px !important;
     }
   }
 }
@@ -3270,6 +3333,10 @@ html {
   }
 }
 
+.footer-logo {
+  padding: 0 0 40px 0;
+}
+
 .flex-footer {
   @include display-flexbox();
   @include align-items(flex-start);
@@ -3640,27 +3707,6 @@ html {
   white-space: normal;
 }
 
-/*================ Product chart ================*/
-//added by Dylan Hsiao for Chego
-.product-chart {
-  width: 100%;
-  max-width: 320px;
-}
-
-.product-chart tr td {
-  text-align: center;
-}
-
-.product-chart__unit {
-  background: purple;
-  color: white;
-}
-
-.product-chart__measures {
-
-}
-
-
 /*================ Product image and thumbnail layout ================*/
 .photos__item--main {
   text-align: center;
@@ -3671,21 +3717,40 @@ html {
   max-width: 100%;
 }
 
+
+// @include media-query($medium-up) {
+//   .photos {
+//     @include display-flexbox();
+//     @include align-items(flex-start);
+//     flex-direction: row;
+//   }
+//
+//   .photos__item--main {
+//     @include flex(1 1 auto);
+//     order: 2;
+//   }
+//
+//   .photos__item--thumbs {
+//     order: 1;
+//     @include flex(0 0 15%);
+//   }
+// }
+
 @include media-query($medium-up) {
   .photos {
-    @include display-flexbox();
+    {% comment %}@include display-flexbox();{% endcomment %}
     @include align-items(flex-start);
     flex-direction: row;
   }
 
   .photos__item--main {
-    @include flex(1 1 auto);
+    {% comment %}@include flex(1 1 auto);{% endcomment %}
     order: 2;
   }
 
   .photos__item--thumbs {
     order: 1;
-    @include flex(0 0 15%);
+    {% comment %}@include flex(0 0 15%);{% endcomment %}
   }
 }
 
@@ -3850,6 +3915,118 @@ html {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/*================ Product Page Added Content Global Settings ================*/
+// added by Dylan Hsiao for Chego
+.product-section{
+  margin-bottom: 20px;
+}
+
+.flex--wrap{
+  flex-wrap: wrap;
+}
+
+
+/*================ Product chart ================*/
+//added by Dylan Hsiao for Chego
+.product-chart {
+  width: 100%;
+  table-layout: fixed;
+  // max-width: 320px;
+}
+
+.product-chart tr td {
+  text-align: center;
+}
+
+.product-chart__unit {
+  background: #504d5c;
+  color: white;
+}
+
+.product-chart__measures {
+
+}
+
+/*================ Product Purpose (designed for) ================*/
+// added by Dylan Hsiao for Chego
+.product-purpose{
+
+}
+
+.purpose-box{
+  margin: 10px;
+  position: relative;
+}
+
+.purpose-box__caption{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  background: rgba(19, 25, 48, .7);
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  font: 24px $font-stack-accent;
+  text-transform: uppercase;
+}
+
+/*================ Product Features ================*/
+//added by Dylan Hsiao for Chego
+.half-width--minus-margin{
+  width: 100%;
+  @include media-query($medium-up){
+    width: calc(50% - 20px);
+  }
+}
+
+.features-box{
+  margin: 10px;
+  padding: 40px;
+  border: 1px solid #c8c8c8;
+  border-radius: 999px;
+  @include media-query($small){
+    padding: 20px;
+  }
+}
+
+.flex--align-item-center{
+  align-items: center;
+}
+
+.features-box__foot{
+  flex: 1 1 100%;
+  max-width: 80px;
+}
+
+.features-box__description{
+  flex: 4 1 100%;
+  padding-left: 20px;
+}
+
+.features-box__description__title{
+  line-height: 40px;
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 10px;
+  font-family: $font-stack-accent;
+  text-transform: uppercase;
+  font-style: normal;
+  font-size: 1.5rem;
+}
+
+/*================ Product Presentation Image ================*/
+//added by Dylan Hsiao for Chego
+.product-presentation{
+  width: 100%;
+  padding: 10px
+}
+.product-presentation__image{
+  display: block;
+  margin: 0 auto;
 }
 
 /*============================================================================
@@ -4226,6 +4403,7 @@ html {
 }
 
 .page-container {
+  // added by Dyan Hsiao
   overflow: hidden;
 }
 
@@ -5502,13 +5680,18 @@ body.modal--is-active {
 }
 
 .image-content__text {
-  padding: $gutter-site * 2;
+  padding: $gutter-site * 1.5;
   @include media-query(small){
     padding: 20px;
   }
 }
 .image-content__title{
+  display: inline-block;
+  float: left;
   line-height: 60px;
+}
+
+.image-content__title--core {
 }
 
 .image-content__icon{

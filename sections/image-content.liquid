@@ -1,52 +1,48 @@
+
 <div class="page-width">
   <div class="section-block section-block--padding">
-    <div class="flex flex--grid flex--no-gutter">
-      {% case section.blocks.size %}
-        {% when 1 %}
-          {% assign flex_size = '' %}
-        {% when 2 %}
-          {% assign flex_size = 'medium-up--one-half' %}
-        {% when 3 %}
-          {% assign flex_size = 'medium-up--one-third' %}
-        {% else %}
-          {% assign flex_size = 'medium-up--one-half' %}
-      {% endcase %}
+
+    <div class="flex flex--grid flex--no-gutter flex-direction-{{ block.settings.direction }}">
       {% for block in section.blocks %}
-        <div class="flex__item flex flex--center-vertical {{ flex_size }}" {{ block.shopify_attributes }}>
-          {% case block.type %}
-            {% when 'image_block' %}
-              <div class="flex__item">
-                {% if block.settings.image != blank %}
-                  <noscript>
-                    <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt }}" class="image-content__image">
-                  </noscript>
-                  <div class="image-content__image-container">
-                    <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
-                      {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-                      <img class="image-content__image lazyload"
-                        src="{{ block.settings.image | img_url: '300x300' }}"
-                        data-src="{{ img_url }}"
-                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                        data-aspectratio="{{ block.settings.image.aspect_ratio }}"
-                        data-sizes="auto"
-                        alt="{{ block.settings.image.alt | escape }}">
-                    </div>
+        {% case block.type %}
+        {% when 'image_block' %}
+          <div class="flex__item flex flex--center-vertical temp--1 flex-order-first-until-medium" {{ block.shopify_attributes }}>
+            <div class="flex__item">
+              {% if block.settings.image != blank %}
+                <noscript>
+                  <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt }}" class="image-content__image">
+                </noscript>
+                <div class="image-content__image-container">
+                  <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+                    {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                    <img class="image-content__image lazyload"
+                      src="{{ block.settings.image | img_url: '300x300' }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt | escape }}">
                   </div>
-                {% else %}
-                  <div class="image-content__image">
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
-                {% endif %}
+                </div>
+              {% else %}
+                <div class="image-content__image">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% when 'text_block' %}
+          <div class="flex__item flex flex--center-vertical temp--2 flex-order-second-until-medium" {{ block.shopify_attributes }}>
+            <div class="flex__item image-content__text text-{{ block.settings.align }}">
+              <div style="clear: both; overflow: hidden;">
+                <img class="image-content__icon" src="{{ block.settings.icon | img_url: '60x60' }}" alt="{{ block.settings.image.alt }}" />
+                <p class="h5 image-content__title">{{ block.settings.title | escape }}</p>
               </div>
-            {% when 'text_block' %}
-              <div class="flex__item image-content__text text-{{ block.settings.align }}">
-                <p class="h5 image-content__title">{{ block.settings.title | escape }}
-                  <img class="image-content__icon" src="{{ block.settings.icon | img_url: '60x60' }}" alt="{{ block.settings.image.alt }}" />
-                </p>
-                <div class="rte-setting">{{ block.settings.text }}</div>
-              </div>
-          {% endcase %}
-        </div>
+              <hr class="hr--teal hr--small-gap" style="height: 6px;">
+              <div class="rte-setting">{{ block.settings.text }}</div>
+            </div>
+          </div>
+        {% endcase %}
       {% endfor %}
     </div>
 
@@ -55,6 +51,7 @@
     {% endif %}
   </div>
 </div>
+
 
 {% schema %}
   {
@@ -70,12 +67,12 @@
             "type": "text",
             "id": "title",
             "label": "Heading",
-            "default": "Image with text"
+            "default": "Core Heading"
           },
           {
             "type": "image_picker",
             "id": "icon",
-            "label": "Featured Icon"
+            "label": "Features Icon"
           },
           {
             "type": "richtext",
@@ -93,6 +90,16 @@
               { "value": "right", "label": "Right" }
             ],
             "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "direction",
+            "label": "Row Direction",
+            "options": [
+              { "value": "row", "label": "Left-Right" },
+              { "value": "row-reverse", "label": "Right-Left" }
+            ],
+            "default": "row"
           }
         ]
       },
@@ -104,6 +111,21 @@
             "type": "image_picker",
             "id": "image",
             "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "image_block_2",
+        "name": "Image_2",
+        "settings": [
+          {
+            "type": "select",
+            "id": "direction",
+            "label": "Row Direction",
+            "options": [
+              { "value": "row", "label": "Left-Right" },
+              { "value": "row-reverse", "label": "Right-Left" }
+            ]
           }
         ]
       }
